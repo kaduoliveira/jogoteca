@@ -36,9 +36,10 @@
           padding: 10px;
           text-align: left;
           border-bottom: 1px solid #ddd;
+         
         }
         th {
-          background-color: #f8f8f8;
+          background-color: #f7baba;
         }
         tr:hover {
           background-color: #A9A9A9;
@@ -54,23 +55,18 @@
             <thead class="thead-default">
                 <tr>
                     <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Console</th>
                 </tr>
             </thead>
             <tbody>
-                {% for jogo in jogos %}
+              {% for jogo in jogos %}
                 <tr>
-                    <td>{{ jogo }}</td>
+                    <td>{{ jogo.nome }}</td>
+                    <td>{{ jogo.categoria }}</td>
+                    <td>{{ jogo.console }}</td>
                 </tr>
                 {% endfor %}
-                <tr>
-                    <td>God of War</td>
-                </tr>
-                <tr>
-                    <td>Skyrim</td>
-                </tr>
-                <tr>
-                    <td>Valorant</td>
-                </tr>
             </tbody>
         </table>
     </div>

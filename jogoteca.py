@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 class Jogo:
     def __init__(self, nome, categoria, console):
@@ -6,28 +6,33 @@ class Jogo:
         self.categoria = categoria
         self.console = console
 
-    def __str__(self):
-        return f'{self.nome} - {self.categoria} - {self.console}'
+#instanciando no código
+jogo1 = Jogo('Mortal Kombat', 'Luta', 'Multiplataforma')
+jogo2 = Jogo('Uncharted', 'Aventura', 'Playstation3')
+jogo3 = Jogo('Forza Motorsport', 'Corrida', 'Xbox Series S&X')
+    
+lista = [jogo1, jogo2, jogo3]
 
+titulo = 'Jogos Maneiros Demais'
 
 app = Flask(__name__)
 
-@app.route('/inicio')
-def ola():
-    titulo = 'Jogos maneiros'
+@app.route('/')
+def index():
 
-    #instanciando no código
-    jogo1 = Jogo('Mortal Kombat', 'Luta', 'Multiplataforma')
-    jogo2 = Jogo('Uncharted', 'Aventura', 'Playstation3')
-    jogo3 = Jogo('Forza Motorsport', 'Corrida', 'Xbox Series S&X')
-    
-    lista_jogos = ['Street Figther',
-                   'Mega Man 8',
-                   'Super Star Soccer',
-                   jogo1,
-                   jogo2,
-                   jogo3]
+    return render_template('lista.html', titulo=titulo, jogos = lista)
 
-    return render_template('lista.html', titulo=titulo, jogos = lista_jogos)
+@app.route('/novo')
+def novo():
+    return render_template('novo.html', titulo = 'Novo Jogo')
 
-app.run()
+@app.route('/criar', methods = ['POST',])
+def criar():
+    nome = request.form['nome']
+    categoria = request.form['categoria']
+    console = request.form['console']
+    jogo = Jogo(nome, categoria, console)
+    lista.append(jogo)
+    return render_template('/lista.html', titulo = titulo, jogos=lista )
+
+app.run(debug=True)
