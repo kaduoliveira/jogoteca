@@ -4,6 +4,46 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jogoteca</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 800px;
+          margin: 50px auto;
+          padding: 20px;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .page-header {
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+        }
+        h1 {
+          font-size: 2em;
+          color: #333;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        th {
+          background-color: #f8f8f8;
+        }
+        tr:hover {
+          background-color: #A9A9A9;
+        }
+      </style>
   </head>
   <body>
     <div class="container">
@@ -17,6 +57,11 @@
                 </tr>
             </thead>
             <tbody>
+                {% for jogo in jogos %}
+                <tr>
+                    <td>{{ jogo }}</td>
+                </tr>
+                {% endfor %}
                 <tr>
                     <td>God of War</td>
                 </tr>
