@@ -4,11 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jogoteca</title>
-    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css')}}">
 </head>
 <body>
     <div class="container">
-      <div class="page-header">
+<!-- mostrando q o resultado o login -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %} 
+            <ul id="messages" class="list-unstyled">
+            {% for message in messages %}
+                <li class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+      <div class="page-header" style="text-align: center;">
           <h1>{{ titulo }}</h1>
       </div>
 
@@ -16,4 +27,5 @@
 
     </div>
 </body>
+<footer style="font-size: x-small; text-align: center;">Desenvolvido por Kadu Oliveira - Python3, Flask</footer>
 </html>
