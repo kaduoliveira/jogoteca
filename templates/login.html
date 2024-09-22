@@ -2,8 +2,9 @@
 {% block conteudo %}
 
 
-
+        <h1>Faça seu Login:</h1>
         <form method="POST" action="/autenticar">
+            <input type="hidden" value="{{ proxima }}">
             <p><label>Nome de usuário:</label> <input class="form-control w-25" type="text" name="usuario" required></p>
             <p><label>Senha:</label> <input class="form-control w-25" type="password" name="senha" required></p>
             <p><button class="btn btn-primary" type="submit">Entrar</button></p>
