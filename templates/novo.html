@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 {% block conteudo %}
-      <form action="/criar" method="post">
+      <form action="{{ url_for('criar') }}" method="post">
         <fieldset>
           <div class="form-group">
             <label for="nome">Nome</label>
@@ -15,7 +15,7 @@
             <input type="text" id="console" name="console" class="form-control">
           </div>
           <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-          <a href="/"><button class="btn btn-primary" type="button" >Voltar</button></a>
+          <a href="{{ url_for('index') }}"><button class="btn btn-primary" type="button" >Voltar</button></a>
         </fieldset>
       </form>
 {% endblock %}
