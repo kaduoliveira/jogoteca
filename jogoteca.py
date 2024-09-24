@@ -66,6 +66,7 @@ def autenticar():
             session['usuario_logado'] = usuario.nickname
             flash(usuario.nickname  + ' foi logado com sucesso!')
             proxima_pagina = request.form['proxima']
+            print(f"Redirecionando para: {proxima_pagina}")  # Mensagem de depuração
             return redirect(proxima_pagina)
     else:
         flash('Usuário não logado.')
