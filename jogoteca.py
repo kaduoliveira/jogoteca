@@ -21,6 +21,7 @@ usuario1 = Usuario('Carlos Oliveira', 'CO', '895623')
 usuario2 = Usuario('Laura Oliveira', 'LO', '0704')
 usuario3 = Usuario('Helena Oliveira', 'HO', '0605')
 
+#dicionario de usuários
 usuarios = {usuario1.nickname : usuario1,
             usuario2.nickname : usuario2,
             usuario3.nickname : usuario3}
