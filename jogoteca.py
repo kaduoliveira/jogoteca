@@ -1,5 +1,10 @@
-from flask import Flask, render_template, request, redirect, session, flash, url_for
+from symtable import Class
 
+from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import false
+
+'''
 class Jogo:
     def __init__(self, nome, categoria, console):
         self.nome = nome
@@ -28,14 +33,44 @@ usuarios = {usuario1.nickname : usuario1,
 
     
 lista = [jogo1, jogo2, jogo3]
+'''
 
 titulo = 'Jogos Maneiros Demais'
 
 app = Flask(__name__)
 app.secret_key = 'alura'
 
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+        SGBD = 'mysql+mysqlconnector',
+        usuario = 'root',
+        senha = 'sumimasen',
+        servidor = 'localhost',
+        database = 'jogoteca'
+    )
+
+db = SQLAlchemy(app)
+
+class Jogos(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(50), nullable=False)
+    categoria = db.Column(db.String(40), nullable=False)
+    console = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
+class Usuarios(db.Model):
+    nickname = db.Column(db.String(8), primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    senha = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
 @app.route('/')
 def index():
+    lista = Jogos.query.order_by(Jogos.id)
     return render_template('lista.html', titulo=titulo, jogos = lista)
 
 @app.route('/novo')
@@ -59,8 +94,9 @@ def login():
     return render_template('login.html', proxima=proxima)
 
 @app.route('/autenticar', methods=['POST',])
+usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
 def autenticar():
-    if request.form['usuario'] in usuarios:
+    if usuario==True:
         usuario = usuarios[request.form['usuario']]
         if request.form['senha'] == usuario.senha:
             session['usuario_logado'] = usuario.nickname
