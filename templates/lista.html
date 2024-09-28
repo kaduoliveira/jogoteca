@@ -7,6 +7,8 @@
                     <th>Nome</th>
                     <th>Categoria</th>
                     <th>Console</th>
+                    <th>Imagem ALura</th>
+                    <th>Imagem online</th>
                     <th></th>
                 </tr>
             </thead>
@@ -17,7 +19,9 @@
                     <td>{{ jogo.nome }}</td>
                     <td>{{ jogo.categoria }}</td>
                     <td>{{ jogo.console }}</td>
-                    <td><img src="https://www.giantbomb.com/a/uploads/scale_small/8/87790/3005645-box_celeste.png" width="70"></td>
+                    <td></td>
+                    <td>
+                        <img src="{{ jogo.imagem_jogo }}" width="70">
                     <td>
                         <a href="{{ url_for('editar', id=jogo.id) }}"><button class="btn btn-primary" type="button" >Editar</button></a>
                         

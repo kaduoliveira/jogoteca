@@ -22,6 +22,13 @@ def criar():
     nome = request.form['nome']
     categoria = request.form['categoria']
     console = request.form['console']
+    imagem_padrao = 'https://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg'
+    imagem_jogo = request.form['imagem_jogo']
+    
+    if imagem_jogo == '':
+        imagem_jogo = imagem_padrao
+    else:
+        imagem_jogo = imagem_jogo
 
     jogo = Jogos.query.filter_by(nome=nome).first()
 
@@ -30,9 +37,10 @@ def criar():
         flash('Esse jogo já existe no cadastro')
         return redirect(url_for('index'))
     # inserindo no banco de dados
-    novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
+    novo_jogo = Jogos(nome=nome, categoria=categoria, console=console, imagem_jogo=imagem_jogo)
     db.session.add(novo_jogo)
     db.session.commit()
+    print(novo_jogo.imagem_jogo)
     print(f'O novo jogo "{nome}" foi criado e enviado para o banco de dados.')
     return redirect(url_for('index'))
 
@@ -62,6 +70,7 @@ def atualizar():
     jogo.nome = request.form['nome']
     jogo.categoria = request.form['categoria']
     jogo.console = request.form['console']
+    jogo.imagem_jogo = request.form['imagem_jogo']
     # Gravando as informações no banco
     db.session.add(jogo)
     db.session.commit()
