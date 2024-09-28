@@ -3,6 +3,7 @@
         <table class="table table-striped table-responsive table-bordered table-hover">
             <thead class="thead-default">
                 <tr>
+                    <th>Id</th>
                     <th>Nome</th>
                     <th>Categoria</th>
                     <th>Console</th>
@@ -12,10 +13,16 @@
             <tbody>
               {% for jogo in jogos %}
                 <tr>
+                    <td>{{ jogo.id }}</td>
                     <td>{{ jogo.nome }}</td>
                     <td>{{ jogo.categoria }}</td>
                     <td>{{ jogo.console }}</td>
-                    <td><a href="{{ url_for('editar', id=jogo.id) }}">Editar</a></td>
+                    <td><img src="https://www.giantbomb.com/a/uploads/scale_small/8/87790/3005645-box_celeste.png" width="70"></td>
+                    <td>
+                        <a href="{{ url_for('editar', id=jogo.id) }}"><button class="btn btn-primary" type="button" >Editar</button></a>
+                        
+                    </td>
+                    <td><a href="{{ url_for('deletar', id=jogo.id) }}"><button style="background-color: red; border: none" class="btn btn-primary" type="button" >Deletar</button></a></td>
                 </tr>
                 {% endfor %}
                 <p><a href="/novo"><button class="btn btn-primary" type="button" >Novo Jogo</button></a></p>

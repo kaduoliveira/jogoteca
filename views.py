@@ -44,6 +44,16 @@ def editar(id):
     jogo = Jogos.query.filter_by(id=id).first()
     return render_template('editar.html', titulo = 'Editando Jogos', jogo=jogo)
 
+@app.route('/deletar/<int:id>')
+def deletar(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        print('Redirecionando para login antes de acessar o sistema.')
+        return redirect(url_for('login'))
+    jogo = Jogos.query.filter_by(id=id).delete()
+    db.session.commit()
+    flash('Jogo deletado com sucesso.')
+    return redirect(url_for('index'))
+
 @app.route('/atualizar', methods=['POST',])
 def atualizar():
     # Localizando o objeto no banco de dados

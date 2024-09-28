@@ -45,7 +45,7 @@ db = SQLAlchemy(app)
 from views import *
 #codigo para outra maquina na rede ter acesso a aplicação
 '''if __name__ == '__main__':
-    app.run(debug=True, host='192.168.0.15')'''
+    app.run(debug=True, host='192.168.15.100')'''
 
 if __name__ == '__main__':
     app.run(debug=True)
