@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from jogoteca import app, db
 from models import Jogos, Usuarios
+from helpers import recupera_imagem, deleta_arquivo
 
 titulo = 'Jogos Maneiros Demais'
 
@@ -102,3 +103,4 @@ def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('index'))
+
