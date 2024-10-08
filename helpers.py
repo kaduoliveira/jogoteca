@@ -1,5 +1,6 @@
 import os
 from jogoteca import app
+from flask_wtf import FlaskForm
 
 
 def recupera_imagem(id):

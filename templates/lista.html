@@ -1,8 +1,8 @@
 {% extends "template.html" %}
 {% block conteudo %}
-        <a href="{{ url_for('login') }}"><button class="btn btn-primary" type="button">Login</button></a>
-        <a href="{{ url_for('logout') }}"><button class="btn btn-danger" type="button">Logout</button></a>
-        <a href="{{ url_for('novo') }}"><button class="btn btn-primary" type="button">Novo</button></a>
+        <a href="{{ url_for('login') }}"><button class="btn btn-primary" style="margin-bottom: 5px;" type="button">Login</button></a>
+        <a href="{{ url_for('logout') }}"><button class="btn btn-danger" style="margin-bottom: 5px;" type="button">Logout</button></a>
+        <a href="{{ url_for('novo') }}"><button class="btn btn-primary" style="margin-bottom: 5px;" type="button">Novo</button></a>
         
         <table class="table table-striped table-responsive table-bordered table-hover">
             <thead class="thead-default">
@@ -11,8 +11,8 @@
                     <th>Nome</th>
                     <th>Categoria</th>
                     <th>Console</th>
-                    <th>Imagem ALura</th>
-                    <th>Imagem online</th>
+                    <th>Imagem Alura</th>
+                    <th>Imagem nline</th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,12 +28,11 @@
                         <img src="{{ jogo.imagem_jogo }}" width="70">
                     <td>
                         <a href="{{ url_for('editar', id=jogo.id) }}"><button class="btn btn-primary" type="button" >Editar</button></a>
-                        
                     </td>
                     <td><a href="{{ url_for('deletar', id=jogo.id) }}"><button style="background-color: red; border: none" class="btn btn-primary" type="button" >Deletar</button></a></td>
                 </tr>
                 {% endfor %}
-                <p><a href="/novo"><button class="btn btn-primary" type="button" >Novo Jogo</button></a></p>
+                
             </tbody>
         </table>
   {% endblock %}
