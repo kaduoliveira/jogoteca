@@ -8,6 +8,7 @@ class FormularioJogo(FlaskForm):
     nome = StringField('Nome do Jogo', [validators.DataRequired(), validators.Length(min=1, max=50)])
     categoria = StringField('Categoria', [validators.DataRequired(), validators.Length(min=1, max=40)])
     console = StringField('Console', [validators.DataRequired(), validators.Length(min=1, max=20)])
+    imagem_jogo = StringField('Imagem Jogo', [validators.Length(500)])
     salvar = SubmitField('Salvar')
 
 #recuperando imagens do hd da máquina

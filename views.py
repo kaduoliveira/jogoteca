@@ -30,6 +30,7 @@ def criar():
     nome = form.nome.data
     categoria = form.categoria.data
     console = form.console.data
+    imagem_jogo = form.imagem_jogo.data
 
     '''
     # recuperando os valores dos campos do formulário
@@ -38,12 +39,12 @@ def criar():
     console = request.form['console']
     imagem_padrao = 'https://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg'
     imagem_jogo = request.form['imagem_jogo']
-    '''
 
-    if imagem_jogo == '':
-        imagem_jogo = imagem_padrao
-    else:
-        imagem_jogo = imagem_jogo
+      if imagem_jogo == '':
+            imagem_jogo = imagem_padrao
+        else:
+            imagem_jogo = imagem_jogo
+        '''
 
     jogo = Jogos.query.filter_by(nome=nome).first()
 
