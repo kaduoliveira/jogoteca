@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from jogoteca import app, db
 from models import Jogos, Usuarios
-from helpers import recupera_imagem, deleta_arquivo
+from helpers import recupera_imagem, deleta_arquivo, FormularioJogo
 
 titulo = 'Jogos Maneiros Demais'
 
@@ -16,16 +16,30 @@ def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         print('Redirecionado pro login.')
         return redirect(url_for('login', proxima=url_for('novo')))
-    return render_template('novo.html', titulo = 'Novo Jogo')
+    form = FormularioJogo()
+    return render_template('novo.html', titulo = 'Novo Jogo', form=form)
 
 @app.route('/criar', methods = ['POST' ,])
 def criar():
+    form = FormularioJogo(request.form)
+
+    if form.validate_on_submit():
+        return redirect(url_for('novo'))
+
+    # recuperando os valores do formulario FlaskForm
+    nome = form.nome.data
+    categoria = form.categoria.data
+    console = form.console.data
+
+    '''
+    # recuperando os valores dos campos do formulário
     nome = request.form['nome']
     categoria = request.form['categoria']
     console = request.form['console']
     imagem_padrao = 'https://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg'
     imagem_jogo = request.form['imagem_jogo']
-    
+    '''
+
     if imagem_jogo == '':
         imagem_jogo = imagem_padrao
     else:
