@@ -65,8 +65,13 @@ def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         print('Redirecionado para a página de edição de Jogos.')
         return redirect(url_for('login', proxima=url_for('editar')))
-    jogo = Jogos.query.filter_by(id=id).first()
-    return render_template('editar.html', titulo = 'Editando Jogos', jogo=jogo)
+    jogo = Jogos.query.filter_by(id=id).first() # recupero as informações do jogo diretamente do banco de dados
+    form = FormularioJogo() # instanciando o objeto
+    form.nome.data = jogo.nome
+    form.categoria.data = jogo.categoria
+    form.console.data = jogo.console
+    form.imagem_jogo.data = jogo.imagem_jogo 
+    return render_template('editar.html', titulo = 'Editando Jogos', id=id, form=form, jogo=jogo) # foi substituido o jogo=jogo pelo id=id, pois não é mais preciso passar todo o objeto
 
 @app.route('/deletar/<int:id>')
 def deletar(id):
@@ -80,16 +85,21 @@ def deletar(id):
 
 @app.route('/atualizar', methods=['POST',])
 def atualizar():
-    # Localizando o objeto no banco de dados
-    jogo = Jogos.query.filter_by(id=request.form['id']).first()
-    # Alocando novos valores buscando no formulario
-    jogo.nome = request.form['nome']
-    jogo.categoria = request.form['categoria']
-    jogo.console = request.form['console']
-    jogo.imagem_jogo = request.form['imagem_jogo']
-    # Gravando as informações no banco
-    db.session.add(jogo)
-    db.session.commit()
+
+    form = FormularioJogo(request.form)
+
+    if form.validate_on_submit():
+
+        # Localizando o objeto no banco de dados
+        jogo = Jogos.query.filter_by(id=request.form['id']).first()
+        # Alocando novos valores buscando no formulario
+        jogo.nome = form.nome.data #código substituido para atender os padrões FlaskForm request.form['nome']
+        jogo.categoria = form.categoria.data #código substituido para atender os padrões FlaskForm request.form['categoria']
+        jogo.console = form.console.data #código substituido para atender os padrões FlaskForm request.form['console']
+        jogo.imagem_jogo = form.imagem_jogo.data #código substituido para atender os padrões FlaskForm request.form['imagem_jogo']
+        # Gravando as informações no banco
+        db.session.add(jogo)
+        db.session.commit()
 
     return redirect(url_for('index'))
 

@@ -3,6 +3,7 @@ from symtable import Class
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import false
+from flask_wtf.csrf import CSRFProtect
 
 # essa parte do códigó não é mais necessária devido ao uso de banco de dados
 '''
@@ -41,6 +42,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
+csrf = CSRFProtect(app)
 
 from views import *
 #codigo para outra maquina na rede ter acesso a aplicação

@@ -2,7 +2,28 @@
 {% block conteudo %}
       <form action="{{ url_for('atualizar') }}" method="post">
         <fieldset>
-          <input type="hidden" name="id" value="{{ jogo.id }}">
+          {{ form.csrf_token() }}
+          <input type="hidden" name="id" value="{{ id }}"> <!-- #a referencia jogo.id foi substituida por apenas id pois o o bjeto completo não está mais sendo passado na view -->
+          <div class="form-group">
+            {{ form.nome.label(class="form-label") }}
+            {{ form.nome(class="form-control") }}
+          <div class="form-group">
+            {{ form.categoria.label(class="form-label") }}
+            {{ form.categoria(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.console.label(class="form-label") }}
+            {{ form.console(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.imagem_jogo.label(class="form-label") }}
+            {{ form.imagem_jogo(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.salvar(class="btn btn-primary") }}
+            <a href="{{ url_for('index') }}"><button class="btn btn-primary" type="button" >Voltar</button></a>
+          </div>
+        <!-- # trecho de código substituido pelo padrao de FlaskForm
           <div class="form-group">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" class="form-control" value="{{ jogo.nome }}">
@@ -19,9 +40,11 @@
             <label for="imagem_jogo">Imagem on-line</label>
             <input type="text" id="imagem_jogo" name="imagem_jogo" class="form-control" value="{{ jogo.imagem_jogo }}"> 
           </div>
-          <br>
           <button type="submit" class="btn btn-primary btn-salvar">Atualizar</button>
-          <a href="{{ url_for('index') }}"><button class="btn btn-primary" type="button" >Voltar</button></a>
+        -->
+          <br>
+          
+          
         </fieldset>
       </form>
 {% endblock %}
