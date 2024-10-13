@@ -30,7 +30,7 @@ TABLES['Jogos'] = ('''
       `nome` varchar(50) NOT NULL,
       `categoria` varchar(40) NOT NULL,
       `console` varchar(20) NOT NULL,
-      'imagem_jogo' varchar(500),
+      `imagem_jogo` varchar(500),
       PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
 

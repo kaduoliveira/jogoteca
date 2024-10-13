@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import false
 from flask_wtf.csrf import CSRFProtect
+from flask_bcrypt import Bcrypt
 
 # essa parte do códigó não é mais necessária devido ao uso de banco de dados
 '''
@@ -43,6 +44,7 @@ app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
+bcryypt = Bcrypt(app)
 
 from views_game import *
 from views_user import *
