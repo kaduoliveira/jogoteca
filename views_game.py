@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from jogoteca import app, db
-from models import Jogos, Usuarios
+from models import Jogos
 from helpers import recupera_imagem, deleta_arquivo, FormularioJogo
 
 titulo = 'Jogos Maneiros Demais'
@@ -23,7 +23,8 @@ def novo():
 def criar():
     form = FormularioJogo(request.form)
 
-    if form.validate_on_submit():
+    # validando, se NÃO atende aos requisitos da helpers nao ele recarrega o /novo
+    if not form.validate_on_submit():
         return redirect(url_for('novo'))
 
     # recuperando os valores do formulario FlaskForm
@@ -31,6 +32,15 @@ def criar():
     categoria = form.categoria.data
     console = form.console.data
     imagem_jogo = form.imagem_jogo.data
+
+    # imprimindo os dados obtidos do formulario
+    print('-'*30)
+    print('Dados do novo jogo')
+    print('Nome: ', nome)
+    print('Categoria: ', categoria)
+    print('Console: ', console)
+    print('Link imagem on-line: ', imagem_jogo)
+    print('-'*30)
 
     '''
     # recuperando os valores dos campos do formulário
@@ -52,6 +62,7 @@ def criar():
     if jogo:
         flash('Esse jogo já existe no cadastro')
         return redirect(url_for('index'))
+    
     # inserindo no banco de dados
     novo_jogo = Jogos(nome=nome, categoria=categoria, console=console, imagem_jogo=imagem_jogo)
     db.session.add(novo_jogo)
@@ -71,7 +82,7 @@ def editar(id):
     form.categoria.data = jogo.categoria
     form.console.data = jogo.console
     form.imagem_jogo.data = jogo.imagem_jogo 
-    return render_template('editar.html', titulo = 'Editando Jogos', id=id, form=form, jogo=jogo) # foi substituido o jogo=jogo pelo id=id, pois não é mais preciso passar todo o objeto
+    return render_template('editar.html', titulo = 'Editando Jogos', id=id, form=form) # foi substituido o jogo=jogo pelo id=id, pois não é mais preciso passar todo o objeto
 
 @app.route('/deletar/<int:id>')
 def deletar(id):
@@ -86,9 +97,9 @@ def deletar(id):
 @app.route('/atualizar', methods=['POST',])
 def atualizar():
 
-    form = FormularioJogo(request.form)
+    form = FormularioJogo(request.form) #estou instanciando o objeto form com os dados quem estou buscando no formulário da página usando o metodo request
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #verificando se o formulario atende aos requisitos definidos na classe FlaskFlorm construida na helpers
 
         # Localizando o objeto no banco de dados
         jogo = Jogos.query.filter_by(id=request.form['id']).first()
@@ -100,34 +111,8 @@ def atualizar():
         # Gravando as informações no banco
         db.session.add(jogo)
         db.session.commit()
+        flash(f'O jogo {jogo.nome} foi atualizado com sucesso.')
 
     return redirect(url_for('index'))
 
-
-@app.route('/login')
-def login():
-    proxima = request.args.get('proxima')
-    return render_template('login.html', proxima=proxima)
-
-@app.route('/autenticar', methods=['POST' ,])
-def autenticar():
-    usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
-    if usuario:
-        if request.form['senha'] == usuario.senha:
-            session['usuario_logado'] = usuario.nickname
-            flash(usuario.nickname  + ' foi logado com sucesso!')
-            proxima_pagina = request.form['proxima']
-            if proxima_pagina == 'None':
-                proxima_pagina = '/'
-            print(f"Redirecionando para: {proxima_pagina}")  # Mensagem de depuração
-            return redirect(proxima_pagina)
-    else:
-        flash('Usuário não logado.')
-        return redirect(url_for('login'))
-
-@app.route('/logout')
-def logout():
-    session['usuario_logado'] = None
-    flash('Logout efetuado com sucesso!')
-    return redirect(url_for('index'))
 

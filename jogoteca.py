@@ -44,7 +44,8 @@ app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
-from views import *
+from views_game import *
+from views_user import *
 #codigo para outra maquina na rede ter acesso a aplicação
 '''if __name__ == '__main__':
     app.run(debug=True, host='192.168.15.100')'''
